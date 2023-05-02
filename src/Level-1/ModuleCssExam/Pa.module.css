@@ -1,0 +1,13 @@
+.asd >h1{
+background-color: brown;
+}
+
+.bttt{
+  padding:10px;
+  outline: 0;
+  border: 0;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 20PX;
+  background-color: rgb(4, 0, 255);
+}

@@ -1,0 +1,70 @@
+.head {
+  font-size: 3.5rem;
+  margin-bottom: 30px;
+  font-style: italic;
+}
+
+.overLay {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, .5);
+  visibility: hidden;
+  opacity: 0;
+  transition: all 2s;
+}
+
+.backdrop {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 250px;
+  z-index: 101;
+  background-color: aqua;
+  border-radius: 10px;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 2s;
+
+}
+.hidePop{
+  visibility: visible;
+  opacity: 1;
+}
+
+.btt {
+
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: absolute;
+  top: -3%;
+  right: -1%;
+  background-color: rgb(24, 24, 24);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size:  2.5rem;
+  font-weight: bolder;
+  cursor: pointer;
+  color: aliceblue;
+transition: all 2s;
+
+
+}
+
+.btnsh{
+  display: block;
+}
+
+
+
+.showPop{
+  display: block;
+}

@@ -1,0 +1,337 @@
+import React, { Fragment } from "react";
+import modalStyle from "./ModalPage.module.css";
+import ReactDOM from "react-dom";
+
+let Backdrop = () => {
+  return <div className={modalStyle.overLay}></div>;
+};
+let OverLay = ({pooo}) => {
+  return <div className={modalStyle.backdrop}>
+    <div className={modalStyle.btt} onClick={()=>{
+pooo(false);
+    }}> X </div>
+  </div>;
+};
+
+const ModalPage = ({btnshoe,showMo}) => {
+  return (
+    btnshoe &&   <>
+    <h1 className={`${modalStyle.head} text-center`}>Modal Page</h1>
+   {ReactDOM.createPortal(
+        <>
+          <Backdrop/>
+          <OverLay  pooo={showMo}/>
+        </>,
+        document.getElementById("modal")
+      )}
+    </>
+  );
+};
+
+export default ModalPage;
+
+
+
+
+import React, { useState, useRef, useEffect } from "react";
+import cartStyle from "./ModalCart.module.css";
+import { objStudents } from "./ModalStudentLisCom";
+import CopySepCart from "./ModalSepCart";
+import CopyFilter from "./ModalFilter";
+import ModalPage from "../ModalPage";
+const ModalCart = () => {
+  let stList = objStudents;
+  let [state, SetState] = useState(objStudents.Student);
+  let [showBool, setShowbool] = useState(true);
+  let [inputValu, setinputValu] = useState("");
+  let inputRef = useRef(null);
+  let [showModal, setshowModal] = useState(false);
+  let [seWord, setSeWord] = useState("");
+
+  let delFuncx = (eleID) => {
+    SetState((prevState) => {
+      return prevState.filter((ele) => eleID !== ele.id);
+    });
+    console.log("State-IN-Side", state);
+  };
+
+  let filtteName = (namew) => {
+    console.log("namew", namew);
+    setSeWord(namew);
+  };
+
+  let showModald = () => {
+    setshowModal(!showModal);
+  };
+  // "btn btn-danger d-block m-auto px-3 py-1 mb-5 fs-3 fw-bolder"
+  return (
+    <>
+      <div className={`${cartStyle.Cart} ${cartStyle.asd}`}>
+        <ModalPage btnshoe={showModal}   showMo={showModald}/>
+        <h1 className={`hide`}>Student List Copy</h1>
+        <button
+      
+          className={
+            !showModal
+              ? ` btn btn-danger d-block m-auto px-3 py-1 mb-5 fs-3 fw-bolder`
+              : `d-none`
+          }
+          onClick={showModald}
+        >
+          ShowModal
+        </button>
+        <div className="container">
+          <button
+            className={cartStyle.showBut}
+            onClick={() => {
+              setShowbool(!showBool);
+            }}
+          >
+            {showBool ? "Hide List" : "Show-List"}
+          </button>
+          <CopyFilter funtt={filtteName} />
+
+          <div className={showBool ? cartStyle.sh : cartStyle.hid}>
+            <CopySepCart
+              objStudent={state}
+              serchword={seWord}
+              bgMale="#d33d3d"
+              bgFeMale="#3dd368"
+              delFunc={delFuncx}
+            />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default ModalCart;
+
+
+
+import React, { useState } from "react";
+import cartSyle from "./ModalCart.module.css";
+
+// const ModalDetaiComp = ({id,name,Gender,Type,Age,Mobile,girCo,delFunc,manCol}) => {
+  const ModalDetaiComp = ({id,name,Gender,Type,Age,Mobile,girCo,delFunc,manCol}) => {
+
+// const CopyDetaiComp = ({,manCol,girCo,delFunc} ) => {
+  return (
+    <div
+      className={`${cartSyle.cont}`}
+      key={id}
+      style={{
+        backgroundColor:
+        // Gender === "Male" ? manCol : girCo,
+        Gender === "Male" ? manCol : girCo,
+      }}
+    >
+      <div className={`${cartSyle.numb}`}>{id}</div>
+      <h4> Name: {name}</h4>
+      <h6>Gender: {Gender}</h6>
+      <h6>Age: {Age}:</h6>
+      <h6>Telephone: {Mobile}</h6>
+      <button
+        className={`${cartSyle.butxx}`}
+        onClick={(e) => {
+          delFunc(id);
+          console.log(id);
+        }}
+      >
+        X
+      </button>
+    </div>
+  );
+};
+
+export default ModalDetaiComp;
+
+
+
+
+import React, { useState } from "react";
+import FilterStyle from "./ModalCart.module.css";
+
+
+
+const ModalFilter = (props) => {
+  let [fiValue, setfiValue] = useState("");
+
+  let filterFun = (e) => {
+    let vla = e.target.value;
+    console.log("e.target.value", vla);
+    setfiValue(vla);
+    console.log("fiValue", fiValue);
+    props.funtt(vla);
+
+  };
+  return (
+    <div className={FilterStyle.filt}>
+      <div className={FilterStyle.inpDiv}>                                  
+        <input
+          type="text"
+          placeholder="search "
+          className={FilterStyle.inp}
+          value={fiValue}
+          onChange={filterFun}
+        />
+        <button
+          className={FilterStyle.inpButDiv}
+          id="ddd"
+          type="dasa"
+          onClick={() => {}}
+        >
+          Search
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default ModalFilter;
+
+// import React, { useState } from 'react';
+// import FilterStyle from  "./Cart.module.css"
+// const ModalFilter = () => {
+//   let[fiValue,setfiValue]=useState("");
+
+//   let filterFun=(e)=>{
+//     console.log(e.target.value)
+//   setfiValue(e.target.value);
+//   }
+//   return (
+//     <div className={FilterStyle.filt}>
+//         <div className={FilterStyle.inpDiv}>
+//       <input type="text" placeholder="search " className={FilterStyle.inp} value={fiValue} onChange={filterFun}/>
+//       <button className={FilterStyle.inpButDiv} id="ddd" type="dasa"  onClick={()=>{
+
+//           }}>Search</button>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default ModalFilter;
+
+import React, { useState } from "react";
+import cartSyle from "./ModalCart.module.css";
+import CopyDetaiComp from "./ModalDetaiComp";
+
+const ModalSepCart = ({objStudent,serchword,bgMale,bgFeMale,delFunc}) => {
+  return (
+    <div className={`${cartSyle.SepCart}`}>
+      {objStudent
+        .filter((item) => {
+          return serchword === ""
+            ? item
+            : item.name.includes(serchword);
+        })
+        // .map((ele) => (
+        //   <CopyDetaiComp key={ele.id} ele={ele}  manCol={bgMale} girCo={bgFeMale} delFunc={delFunc}/>
+          
+          .map(({id,...otherProps}) => (
+          <CopyDetaiComp key={id} {...otherProps} id={id} manCol={bgMale} girCo={bgFeMale} delFunc={delFunc}/>
+          
+        ))}
+    </div>
+  );
+};
+
+export default ModalSepCart;
+
+
+
+export let objStudents = {
+  Student: [
+    {
+      id: 1,
+      name: "adel",
+      Gender: "Male",
+      Type: "PROG",
+      Age: 29,
+      Mobile: "011 235 35 323",
+    },
+    {
+      id: 2,
+      name: "Alaa",
+      Gender: "Male",
+      Job: "FullStack",
+      Age: 29,
+      Skills: "FootBall",
+      Mobile: "012 943 23 134",
+    },
+    {
+      id: 3,
+      name: "May",
+      Gender: "Female",
+      Job: "Programmer",
+      Age: 19,
+      Skills: "Reading",
+      Mobile: "015 812 43 934",
+    },
+    {
+      id: 4,
+      name: "Randa",
+      Gender: "Female",
+      Job: "Teacher",
+      Age: 25,
+      Skills: "Teach",
+      Mobile: "017 379 72 123",
+    },
+    {
+      id: 5,
+      name: "Omar",
+      Gender: "Male",
+      Job: "Teacher",
+      Age: 23,
+      Skills: "Boxing",
+      Mobile: "012 943 26 577",
+    },
+    {
+      id: 6,
+      name: "Yasser",
+      Gender: "Male",
+      Job: "Doctor",
+      Age: 43,
+      Skills: "Racing",
+      Mobile: "011 431 46 525",
+    },
+    {
+      id: 7,
+      name: "Safaaa",
+      Gender: "Female",
+      Job: "Minister",
+      Age: 33,
+      Skills: "Caring",
+      Mobile: "010 673 139 812",
+    },
+    {
+      id: 8,
+      name: "Kholoud",
+      Gender: "Female",
+      Job: "Lawer",
+      Age: 55,
+      Skills: "Chatingggg",
+      Mobile: "011 410 25 121",
+    },
+    {
+      id: 9,
+      name: "AMGAED",
+      Gender: "Male",
+      Job: "Saver",
+      Age: 43,
+      Skills: "Kallping",
+      Mobile: "015 753 55 102",
+    },
+    {
+      id: 10,
+      name: "Issraa",
+      Gender: "Female",
+      Job: "KHaaaaa",
+      Age: 23,
+      Skills: "Homming",
+      Mobile: "010 851 10 345",
+    },
+  ],
+};
